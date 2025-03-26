@@ -34,23 +34,33 @@ const Login1 = ({ navigation }) => {
   // }, [])
 
   const handleLogin = async () => {
-  
     const user = { email, password };
   
     try {
-      console.log("Attempting to make an API call...");
+      console.log("Attempting login...");
   
-      const response = await axios.post("http://192.168.29.77:8000/login", user); // Replace with your actual local IP
+      const response = await axios.post("http://192.168.29.77:8000/login", user);
+      
+      console.log("Login successful:", response.data);
   
-      console.log("Response received:", response.data);
-  
+      // Save token
       const token = response.data.token;
       await AsyncStorage.setItem("authToken", token);
-      navigation.replace("Home");
+  
+      // Navigate to the main screen
+      navigation.replace("Main");
     } catch (error) {
-      console.log("Error occurred during login:", error); // Catch the error
+      if (error.response) {
+        // Server responded with an error
+        console.log("Login error:", error.response.data.message);
+        alert(error.response.data.message); // Show error message
+      } else {
+        console.log("Network error:", error);
+        alert("Something went wrong. Please try again later.");
+      }
     }
   };
+  
   
 
   return (

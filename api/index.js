@@ -60,36 +60,34 @@ const createToken = (userId) => {
 
 
 //endpoint for logging in 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
+  console.log("Login API hit");
 
-    console.log("login hit")
-    const { email, password } = req.body;
-  
-    //check if the email and password are provided
-    if (!email || !password) {
-      return res
-        .status(404)
-        .json({ message: "Email and the password are required" });
-    }
-  
-    //check for that user in the database
-    User.findOne({ email: email.toLowerCase() })
-      .then((user) => {
-        if (!user) {
-          //user not found
+  const { email, password } = req.body;
+
+  // Check if the email and password are provided
+  if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+  }
+
+  try {
+      // Find user in the database
+      const user = await User.findOne({ email: email.toLowerCase() });
+
+      if (!user) {
           return res.status(404).json({ message: "User not found" });
-        }
-  
-        //compare the provided passwords with the password in the database
-        if (user.password !== password) {
-          return res.status(404).json({ message: "Invalid Password!" });
-        }
-  
-        const token = createToken(user._id);
-        res.status(200).json({ token });
-      })
-      .catch((error) => {
-        console.log("error in finding the user", error);
-        res.status(500).json({ message: "Internal server Error!" });
-      });
-  });
+      }
+
+      // Compare passwords (Use bcrypt if passwords are hashed)
+      if (user.password !== password) {
+          return res.status(401).json({ message: "Invalid password!" });
+      }
+
+      // Generate token (assuming `createToken` function exists)
+      const token = createToken(user._id);
+      return res.status(200).json({ token });
+  } catch (error) {
+      console.error("Error in finding the user:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
+  }
+});
