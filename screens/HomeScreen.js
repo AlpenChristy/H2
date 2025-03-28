@@ -5,7 +5,7 @@ import {
 import { Feather } from "@expo/vector-icons"; // Bell icon
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [username, setUsername] = useState("User");
   const [loading, setLoading] = useState(true);
 
@@ -73,7 +73,7 @@ const HomeScreen = () => {
             require("../assets/home/Group 4.png"),
             require("../assets/home/Group 5.png"),
           ].map((icon, index) => (
-            <TouchableOpacity key={index} style={styles.moodButton}>
+            <TouchableOpacity key={index} style={styles.moodButton} onPress={() => navigation.navigate('Notes')}>
               <Image source={icon} style={styles.moodIcon} />
             </TouchableOpacity>
           ))}

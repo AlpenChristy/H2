@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt"); // 🔒 Security for passwords
+const bcrypt = require("bcrypt");
+const router = express.Router();
 
 const app = express();
 const port = 8000;
@@ -32,8 +33,15 @@ app.listen(port, () => {
 const User = require("./models/user");
 const Message = require("./models/message");
 const CounselorRoutes = require("./routes/counselorRoutes");
+const NotesRoutes = require("./routes/notesRoutes");
+
+
 
 app.use("/api/counselors", CounselorRoutes);
+app.use("/api/notes", NotesRoutes); 
+
+
+
 
 // Function to create JWT token
 const createToken = (userId) => {
