@@ -14,8 +14,9 @@ router.post("/save", async (req, res) => {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found." });
 
-        // Add the new note to the user's notes array
-        user.notes.push({ text });
+        // Add the new note with a timestamp
+        const newNote = { text, createdAt: new Date() };
+        user.notes.push(newNote);
         await user.save();
 
         res.status(200).json({ message: "Note saved successfully!", notes: user.notes });
@@ -34,6 +35,25 @@ router.get("/:userId", async (req, res) => {
         res.status(200).json(user.notes);
     } catch (error) {
         console.error("Error fetching notes:", error);
+        res.status(500).json({ message: "Server error. Try again later." });
+    }
+});
+
+// Delete a specific note
+router.delete("/:userId/:noteId", async (req, res) => {
+    try {
+        const { userId, noteId } = req.params;
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found." });
+
+        // Filter out the note to delete
+        user.notes = user.notes.filter((note) => note._id.toString() !== noteId);
+        await user.save();
+
+        res.status(200).json({ message: "Note deleted successfully.", notes: user.notes });
+    } catch (error) {
+        console.error("Error deleting note:", error);
         res.status(500).json({ message: "Server error. Try again later." });
     }
 });

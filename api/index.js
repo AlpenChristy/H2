@@ -35,12 +35,13 @@ const Message = require("./models/message");
 const CounselorRoutes = require("./routes/counselorRoutes");
 const NotesRoutes = require("./routes/notesRoutes");
 
-
+const chatbotController = require("./chatbotController");
 
 app.use("/api/counselors", CounselorRoutes);
 app.use("/api/notes", NotesRoutes); 
 
 
+app.post("/chat", chatbotController.chatWithBot);
 
 
 // Function to create JWT token

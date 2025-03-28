@@ -8,6 +8,9 @@ import Login1 from "./screens/login/Login-1";
 import BottomTabs from "./components/BottomTabNavigator"; // Import BottomTabs
 import CounselorProfileScreen from "./screens/CounselorProfileScreen";
 import MoodTrackerScreen from "./screens/Notes";
+import NotesScreen from "./screens/NotesScreen";
+
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -30,6 +33,8 @@ export default function App() {
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
         <Stack.Screen name="CounselorProfile" component={CounselorProfileScreen} />
         <Stack.Screen name="Notes" component={MoodTrackerScreen} />
+        <Stack.Screen name="SavedNotes" component={NotesScreen} />
+
         
 
 
