@@ -32,7 +32,7 @@ const SignUp = ({ navigation }) => {
       {/* Login Link */}
       <Text style={styles.footerText}>
         Already have an account?{" "}
-        <Text style={styles.linkText} onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.linkText} onPress={() => navigation.navigate("Login1")}>
           Log in
         </Text>
       </Text>

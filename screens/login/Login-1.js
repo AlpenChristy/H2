@@ -43,17 +43,20 @@ const Login1 = ({ navigation }) => {
       
       console.log("Login successful:", response.data);
   
-      // Save token
-      const token = response.data.token;
+      const { token, userId } = response.data; // ✅ Get userId from backend response
+  
+      // Save token and userId
       await AsyncStorage.setItem("authToken", token);
+      await AsyncStorage.setItem("userId", userId);  // ✅ Store userId
+  
+      console.log("Stored userId:", userId); // Debugging
   
       // Navigate to the main screen
       navigation.replace("Main");
     } catch (error) {
       if (error.response) {
-        // Server responded with an error
         console.log("Login error:", error.response.data.message);
-        alert(error.response.data.message); // Show error message
+        alert(error.response.data.message);
       } else {
         console.log("Network error:", error);
         alert("Something went wrong. Please try again later.");

@@ -5,8 +5,8 @@ import WelcomeScreen from "./screens/signup/WelcomeScreen";
 import SignUp from "./screens/signup/SignUp";
 import SignUp2Screen from "./screens/signup/Signup-2";
 import Login1 from "./screens/login/Login-1";
-import HomeScreen from './screens/HomeScreen';
 import BottomTabs from "./components/BottomTabNavigator"; // Import BottomTabs
+import CounselorProfileScreen from "./screens/CounselorProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +28,8 @@ export default function App() {
         {/* Main App Screens - Bottom Tabs */}
         <Stack.Screen name="Main" component={BottomTabs} />
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="CounselorProfile" component={CounselorProfileScreen} />
+
 
       </Stack.Navigator>
     </NavigationContainer>
